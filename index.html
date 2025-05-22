@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eating places around the company</title>
+    <!--bootstrapのテンプレートの追加-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+      crossorigin="anonymous"
+    />
+    <style>
+      .feature-icon {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 0.75rem;
+      }
+      .navbar-brand .bi {
+        font-size: 24px;
+        color: white;
+      }
+      .p-main-photos__view {
+        width: 100%;
+        height: 100px;
+        overflow: hidden;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      .card-body {
+        flex: 1 1 auto;
+        padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+        color: var(--bs-card-color);
+      }
+
+      #backToTopBtn {
+        display: none;
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        z-index: 99;
+        font-size: 20px;
+        background-color: orange;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0);
+        transition: opacity 0.3s ease;
+      }
+      #backToTopBtn:hover {
+        background-color: orangered;
+      }
+
+      .card-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.5em;
+        max-height: 4.5em;
+        line-clamp: 3;
+      }
+
+      .card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-body {
+        flex-grow: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <i class="bi bi-piggy-bank"></i>
+          Meal
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#lunch">Lunch</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#dinner">Dinner</a>
+            </li>
+          </ul>
+          <div class="container-search">
+            <form
+              class="d-flex justify-content-center mb-3"
+              role="search"
+              onsubmit="return false;"
+            >
+              <input
+                id="searchInput"
+                class="form-control me-2 w-50"
+                type="search"
+                placeholder="Key word"
+                aria-label="Search"
+              />
+              <button
+                class="btn btn-outline-success"
+                type="button"
+                onclick="performSearch()"
+              >
+                search
+              </button>
+            </form>
+            <p id="noResults" class="text-danger" style="display: none">
+              There were no matching results.
+            </p>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="px-4 pt-5 my-5 text-center border-bottom">
+      <h1 class="display-4 fw-bold text-body-emphasis">
+        Find a place to eat near your office.
+      </h1>
+      <div class="col-lg-6 mx-auto">
+        <!--当社のウェブサイトへようこそ。ここでは、あなたの会社の近くにあるお食事処を見ることができます。
+            ランチをどこで買おうか迷った時や、仕事帰りにどこかへ食べに行きたい時にご利用ください。
+            お気に入りのレストランが見つかることを祈っています。-->
+        <p class="lead mb-4">
+          Welcome to our web site! Here you can see the dining options near your
+          company.<br />
+          Use it when you are not sure where to buy lunch or when you want to go
+          somewhere to eat after work.<br />
+          Hope you find your favorite restaurant.
+        </p>
+      </div>
+      <div class="overflow-hidden" style="max-height: 40vh">
+        <div class="container px-5">
+          <img
+            src="./image/home_meal_image.jpg"
+            class="img-fluid border rounded-3 shadow-lg mb-5"
+            alt="Example image"
+            width="500"
+            height="600"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="container px-4 py-5" id="featured-3">
+      <h2 class="pb-2 border-bottom">Let's find a store!</h2>
+      <h3 class="navbar-brand-time my-3" id="lunch">
+        <i class="bi bi-egg-fried"></i>
+        Lunch
+      </h3>
+      <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+              <div class="card shadow-sm">
+                <img
+                  src="./image/香港居酒屋_龍記.jpg"
+                  class="bd-placeholder-img card-img-top"
+                  width="100%"
+                  height="225"
+                  alt="Example image"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  香港居酒屋_龍記
+                </p>
+                <div class="card-body">
+                  <!--本格中華レストラン。メニューはすべてテイクアウト可能。-->
+                  <p class="card-text">
+                    Authentic Chinese restaurant.<br />
+                    Everything on the restaurant's menu is available for
+                    takeout.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://tabelog.com/tokyo/A1314/A131402/13291723/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/myq81nNRryCjneNW9"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">1 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <img
+                  src="./image/カリーアンダーソン.jpg"
+                  class="bd-placeholder-img card-img-top"
+                  alt="Example image"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  カリーアンダーソン
+                </p>
+                <div class="card-body">
+                  <!--アットホームな雰囲気の創作カレー店。テイクアウトやデリバリーも可能。-->
+                  <p class="card-text">
+                    A creative curry restaurant with a homey atmosphere.<br />
+                    Takeout and delivery are available.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://curry-underson.com/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/1WUAPK2eGykF2tKg7"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">4 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <img
+                  src="./image/蕎麦切_砥喜和.jpg"
+                  class="bd-placeholder-img card-img-top"
+                  alt="Example image"
+                  width="100%"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  蕎麦切 砥喜和
+                </p>
+                <div class="card-body">
+                  <!--落ち着いた雰囲気の中で、旬の食材を使った蕎麦や天ぷらを楽しめる。-->
+                  <p class="card-text">
+                    You can enjoy soba noodles and tempura of seasonal
+                    ingredients in a relaxed atmosphere.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://tabelog.com/tokyo/A1314/A131401/13145880/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/XBXa4rnFEz6tvkD86"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">13 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <!--styleで拡張幅を指定
+                　　-mx-autoでmarginの側面をautoにする。
+                　　d-blockで画像をブロック要素にして中央寄せが効くようにする-->
+                <img
+                  src="./image/ゼロワンカレーA.o.D.jpg"
+                  class="bd-placeholder-img card-img-top mx-auto d-block"
+                  alt="ゼロワンカレーA.o.D Indian curry restaurant"
+                  style="max-width: 280px"
+                  width="100%"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  ゼロワンカレーA.o.D
+                </p>
+                <div class="card-body">
+                  <!--カレーTOKYOでカレー100選に選ばれたインドカレー店。-->
+                  <p class="card-text">
+                    This Indian curry restaurant has been selected as one of the
+                    100 best curry restaurants in Curry TOKYO.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://zeroonecurry.com/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/1zFLfepG65Ut9tA66"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">5 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <!--styleで拡張幅を指定
+                　　-mx-autoでmarginの側面をautoにする。
+                　　d-blockで画像をブロック要素にして中央寄せが効くようにする-->
+                <img
+                  src="./image/ほっかほっか亭_三田3丁目.jpg"
+                  class="bd-placeholder-img card-img-top mx-auto d-block"
+                  style="max-width: 300px"
+                  alt="Example image"
+                  width="100%"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  ほっかほっか亭 三田3丁目
+                </p>
+                <div class="card-body">
+                  <!--お手頃な値段のお弁当屋です。揚げ物，炒め物，焼き魚などの様々な種類のお弁当を食べることができます。-->
+                  <p class="card-text">
+                    This is a reasonably priced bento shop.<be></be>
+                    You can eat various kinds of bento such as fried food,
+                    stir-fried food, grilled fish, etc.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://www.hokkahokka-tei.jp/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/PCGkKm7oHjTTy4378"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">6 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <!--styleで拡張幅を指定
+                　　-mx-autoでmarginの側面をautoにする。
+                　　d-blockで画像をブロック要素にして中央寄せが効くようにする-->
+                <img
+                  src="./image/旬八弁当店.jpg"
+                  class="bd-placeholder-img card-img-top mx-auto d-block"
+                  style="max-width: 300px"
+                  alt="Example image"
+                  width="100%"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">旬八弁当店</p>
+                <div class="card-body">
+                  <!--八百屋のお弁当屋さん。色とりどりの旬の野菜が入ったお弁当が食べられます。-->
+                  <p class="card-text">
+                    This is a lunch box shop of a grocery store.<br />
+                    You can eat bento boxes filled with colorful seasonal
+                    vegetables.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://www.shunpachi-bento.com/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/wuNYzF1FaKwaeZCB7"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">5 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="navbar-brand-time my-3" id="dinner">
+        <i class="bi bi-moon-fill"></i>
+        Dinner
+      </h3>
+      <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+              <div class="card shadow-sm">
+                <img
+                  src="./image/やっとこ_三田店.jpg"
+                  class="bd-placeholder-img card-img-top"
+                  width="100%"
+                  height="225"
+                  alt="Example image"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  やっとこ 三田店
+                </p>
+                <div class="card-body">
+                  <!--バラエティに富んだラーメンとつけ麺の店。
+                      気軽にサクッと食べたい時にオススメ。-->
+                  <p class="card-text">
+                    This is a ramen and tsukemen restaurant with a wide variety
+                    of ramen and tsukemen.<br />
+                    Recommended for a casual, quick meal.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://tabelog.com/tokyo/A1314/A131402/13158832/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/bf8Znqs4abGQMsA97"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">6 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <img
+                  src="./image/PIZZA_SALAVATORE_CUOMO_白金.jpg"
+                  class="bd-placeholder-img card-img-top"
+                  alt="Example image"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  PIZZA SALAVATORE CUOMO 白金
+                </p>
+                <div class="card-body">
+                  <!--特製の窯で焼きあげてくれるピザのお店です
+                      パスタや前菜、デザートも豊富です。-->
+                  <p class="card-text">
+                    This is a pizza restaurant that bakes pizza in a special
+                    oven.<br />
+                    A wide variety of pastas, appetizers, and desserts are also
+                    available.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://www.salvatore.jp/restaurant/shirokane/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/tC6w76q3vvPQ4Qta7"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">17 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <img
+                  src="./image/和食ダイニング_糸_ito.webp"
+                  class="bd-placeholder-img card-img-top"
+                  alt="Example image"
+                  width="100%"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  和食ダイニング 糸 ito
+                </p>
+                <div class="card-body">
+                  <!--日本酒と魚の和食のお店です。
+                      新鮮な魚料理と豊富なお酒を楽しめます。個別盛りの料理で接待などにもぜひ。-->
+                  <p class="card-text">
+                    Japanese cuisine with sake and fish.<br />
+                    You can enjoy fresh fish dishes and a wide variety of sake.
+                    Please visit us for business entertainment with individual
+                    portions of dishes.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://itohen-official.com/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/HbzmCQu7EcAyXWJ77"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <img
+                  src="./image/焼き鳥屋_衣袋屋.jpg"
+                  class="bd-placeholder-img card-img-top"
+                  alt="restaurant"
+                  width="100%"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  焼き鳥屋 衣袋屋
+                </p>
+                <div class="card-body">
+                  <!--希少部位も取りそろえた焼き鳥屋です。
+                      バーのような落ち着いた雰囲気で焼き鳥とお酒を楽しむことができます。-->
+                  <p class="card-text">
+                    This yakitori restaurant also offers a wide selection of
+                    rare parts.<br />
+                    Enjoy yakitori and drinks in a relaxed bar-like atmosphere.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://tabelog.com/tokyo/A1314/A131402/13302050/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/hfwYnC8E4jxEiu9b9"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">8 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <!--styleで拡張幅を指定
+                　　-mx-autoでmarginの側面をautoにする。
+                　　d-blockで画像をブロック要素にして中央寄せが効くようにする-->
+                <img
+                  src="./image/芝の鳥一代.jpg"
+                  class="bd-placeholder-img card-img-top"
+                  alt="Example image"
+                  width="100%"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">芝の鳥一代</p>
+                <div class="card-body">
+                  <!--10時間コツコツ煮込んだ水炊きが食べられるお店です。
+                      65人までの大人数での宴会もできます。-->
+                  <p class="card-text">
+                    This is a restaurant where you can enjoy mizutaki, a dish
+                    cooked in a steady simmer for 10 hours.<br />
+                    Large banquets of up to 65 people can also be held.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://ga0r308.gorp.jp/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/PD3h7ppuxQhQ74RN6"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">20 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <img
+                  src="./image/恵比寿餃子.jpg"
+                  class="bd-placeholder-img card-img-top"
+                  alt="Example image"
+                  width="100%"
+                  height="225"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                />
+                <p style="margin: 1em 0 1em 1em; color: orange">
+                  恵比寿餃子 大豊記 芝大門
+                </p>
+                <div class="card-body">
+                  <!--餃子を中心にした中華料理のお店です。
+                      お手軽な値段の豊富な種類の料理がお酒と楽しめます。-->
+                  <p class="card-text">
+                    A Chinese restaurant with a focus on dumplings.<br />
+                    A wide variety of dishes at reasonable prices can be enjoyed
+                    with alcohol.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <a
+                        href="https://tabelog.com/tokyo/A1314/A131401/13233416/"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </a>
+                      <a
+                        href="https://maps.app.goo.gl/9nvVB5Xs1gC1p3EP7"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Map
+                      </a>
+                    </div>
+                    <small class="text-body-secondary">20 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <footer
+        class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top"
+      >
+        <div class="col mb-3">
+          <a
+            href="/"
+            class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none"
+          >
+            <svg class="bi me-2" width="40" height="32">
+              <use xlink:href="#bootstrap"></use>
+            </svg>
+          </a>
+          <p class="text-body-secondary">© 2024</p>
+        </div>
+
+        <div class="col mb-3"></div>
+
+        <div class="col mb-3">
+          <h5>Section</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">Home</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">Features</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">Pricing</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">FAQs</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">About</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col mb-3">
+          <h5>Section</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">Home</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">Features</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">Pricing</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">FAQs</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">About</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col mb-3">
+          <h5>Section</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">Home</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">Features</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">Pricing</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">FAQs</a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link p-0 text-body-secondary">About</a>
+            </li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+    <button onclick="scrollToTop()" id="backToTopBtn" title="上に戻る">
+      <i class="bi bi-arrow-up-circle"></i>
+    </button>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <!-- HTMLの最後、</body>の直前に配置 -->
+    <script>
+      // 最上部に戻すボタン用
+      window.onscroll = function () {
+        const btn = document.getElementById("backToTopBtn");
+        if (
+          document.body.scrollTop > 200 ||
+          document.documentElement.scrollTop > 200
+        ) {
+          btn.style.display = "block";
+        } else {
+          btn.style.display = "none";
+        }
+      };
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // 検索機能用
+      function performSearch() {
+        const keyword = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const cards = document.querySelectorAll(".card");
+        let hasResults = false;
+
+        cards.forEach((card) => {
+          const text = card.textContent.toLowerCase();
+          const match = text.includes(keyword);
+          card.parentElement.style.display = match ? "block" : "none";
+          if (match) hasResults = true;
+        });
+
+        document.getElementById("noResults").style.display = hasResults
+          ? "none"
+          : "block";
+      }
+    </script>
+  </body>
+</html>
