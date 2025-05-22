@@ -1,0 +1,66 @@
+.feature-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.75rem;
+}
+.navbar-brand .bi {
+  font-size: 24px;
+  color: white; /* 必要に応じて好きな色に */
+  /*margin-right: 8px;*/
+}
+.p-main-photos__view {
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#backToTopBtn {
+  display: none; /* 最初は非表示 */
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 99;
+  font-size: 20px;
+  background-color: orange; /*通常色*/
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0);
+  transition: opacity 0.3s ease;
+}
+#backToTopBtn:hover {
+  background-color: orangered; /*矢印が乗った時の色*/
+}
+
+/*お店の紹介の縦の長さを揃える*/
+
+.card-img-top {
+  height: 225px;
+  object-fit: cover;
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+  color: var(--bs-card-color);
+  flex-grow: 1; /*残ったスペースを伸びて埋める役割。.card-body が余白を吸収してカード全体の高さを自然に整える*/
+}
+
+.limited-width {
+  max-width: 280px;
+  margin: 0 auto; /* 中央寄せ（必要なら） */
+  display: block; /* 中央寄せが効くように */
+}
