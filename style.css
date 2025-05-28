@@ -64,3 +64,9 @@ html {
   margin: 0 auto; /* 中央寄せ（必要なら） */
   display: block; /* 中央寄せが効くように */
 }
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-size: 20px; /* 必要に応じて調整 */
+  vertical-align: middle;
+}
