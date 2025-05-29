@@ -1,13 +1,78 @@
+//多言語データを定義
+const translations = {
+  ja: {
+    "nav.home": "ホーム",
+    "nav.lunch": "ランチ",
+    "nav.dinner": "ディナー",
+    "search.placeholder": "キーワード",
+    "search.button": "検索",
+    "search.noResults": "該当する結果は見つかりませんでした。",
+    "hero.title": "オフィスの近くで食事ができる場所を探してみよう!",
+    "hero.description":
+      "当社のウェブサイトへようこそ。ここでは、あなたの会社の近くにあるお食事処を見ることができます。<br>ランチをどこで買おうか迷った時や、仕事帰りにどこかへ食べに行きたい時にご利用ください。<br>お気に入りのレストランが見つかることを祈っています。",
+    "section.find": "お店を探してみよう！",
+    "section.lunch": "ランチ",
+    "section.dinner": "ディナー",
+  },
+};
+
+let currentLang = "en"; //初期は英語
+
+function changeLanguage(lang) {
+  currentLang = lang; // グローバル変数を更新
+  const t = translations[currentLang] || {};
+
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+
+    // 元のHTMLを保存（英語として使用）
+    if (!el.hasAttribute("data-default")) {
+      el.setAttribute("data-default", el.innerHTML);
+    }
+
+    if (lang === "ja" && t[key]) {
+      el.innerHTML = t[key]; // 日本語だけ上書き
+    } else {
+      el.innerHTML = el.getAttribute("data-default"); // 英語に戻す
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-placeholder");
+
+    if (!el.hasAttribute("data-default")) {
+      el.setAttribute("data-default", el.getAttribute("placeholder"));
+    }
+
+    if (lang === "ja" && t[key]) {
+      el.setAttribute("placeholder", t[key]);
+    } else {
+      el.setAttribute("placeholder", el.getAttribute("data-default"));
+    }
+  });
+
+  // 言語表示のラベル切り替え
+  document.getElementById("languageToggle").textContent =
+    lang === "ja" ? "日本語" : "English";
+
+  createShopCards(); // 言語切り替え後に再描画
+}
+//
+//
+//
 //お店紹介カードテンプレート
 const shopData = [
   {
     type: "lunch",
     imgSrc: "./image/香港居酒屋_龍記.jpg",
-    title: "香港居酒屋_龍記",
-    //本格中華レストラン。メニューはすべてテイクアウト可能
-    description:
-      "Authentic Chinese restaurant.<br>Everything on the restaurant's menu is available for takeout.",
-    //検索用ワード
+    title: {
+      en: "Hong Kong Izakaya Ryuki",
+      ja: "香港居酒屋 龍記",
+    },
+    description: {
+      en: "Authentic Chinese restaurant.<br>Everything on the restaurant's menu is available for takeout.",
+      ja: "本格中華レストラン。<br>メニューはすべてテイクアウト可能です。",
+    },
     words: [
       "中華料理",
       "中華",
@@ -41,11 +106,14 @@ const shopData = [
   {
     type: "lunch",
     imgSrc: "./image/カリーアンダーソン.jpg",
-    title: "カリーアンダーソン",
-    //アットホームな雰囲気の創作カレー店。テイクアウトやデリバリーも可能。
-    description:
-      "A creative curry restaurant with a homey atmosphere.<br>Takeout and delivery are available.",
-    //検索用ワード
+    title: {
+      en: "Curry Underson",
+      ja: "カリーアンダーソン",
+    },
+    description: {
+      en: "A creative curry restaurant with a homey atmosphere.<br>Takeout and delivery are available.",
+      ja: "アットホームな雰囲気の創作カレー店。<br>テイクアウトやデリバリーも可能。",
+    },
     words: [
       "カレー",
       "スパイス",
@@ -67,11 +135,14 @@ const shopData = [
   {
     type: "lunch",
     imgSrc: "./image/蕎麦切_砥喜和.jpg",
-    title: "蕎麦切 砥喜和",
-    //落ち着いた雰囲気の中で、旬の食材を使った蕎麦や天ぷらを楽しめる。
-    description:
-      "You can enjoy soba noodles and tempura of seasonal ingredients in a relaxed atmosphere.",
-    //検索用ワード
+    title: {
+      en: "Soba Kiri Tokiwa",
+      ja: "蕎麦切 砥喜和",
+    },
+    description: {
+      en: "You can enjoy soba noodles and tempura of seasonal ingredients in a relaxed atmosphere.",
+      ja: "落ち着いた雰囲気の中で、旬の食材を使った蕎麦や天ぷらを楽しめる。",
+    },
     words: [
       "蕎麦",
       "そば",
@@ -94,11 +165,14 @@ const shopData = [
   {
     type: "lunch",
     imgSrc: "./image/ゼロワンカレーA.o.D.jpg",
-    title: "ゼロワンカレーA.o.D",
-    //カレーTOKYOでカレー100選に選ばれたインドカレー店。
-    description:
-      "This Indian curry restaurant has been selected as one of the 100 best curry restaurants in Curry TOKYO.",
-    //検索用ワード
+    title: {
+      en: "Zero One Curry A.o.D",
+      ja: "ゼロワンカレーA.o.D",
+    },
+    description: {
+      en: "This Indian curry restaurant has been selected as one of the 100 best curry restaurants in Curry TOKYO.",
+      ja: "カレーTOKYOでカレー100選に選ばれたインドカレー店。",
+    },
     words: [
       "カレー",
       "南インド料理",
@@ -118,11 +192,14 @@ const shopData = [
   {
     type: "lunch",
     imgSrc: "./image/ほっかほっか亭_三田3丁目.jpg",
-    title: "ほっかほっか亭 三田3丁目",
-    //お手頃な値段のお弁当屋です。揚げ物，炒め物，焼き魚などの様々な種類のお弁当を食べることができます。
-    description:
-      "This is a reasonably priced bento shop.<br>You can eat various kinds of bento such as fried food, stir-fried food, grilled fish, etc.",
-    //検索用ワード
+    title: {
+      en: "Hokkahokka-tei Mita 3-chome",
+      ja: "ほっかほっか亭 三田3丁目",
+    },
+    description: {
+      en: "This is a reasonably priced bento shop.<br>You can eat various kinds of bento such as fried food, stir-fried food, grilled fish, etc.",
+      ja: "お手頃な値段のお弁当屋です。揚げ物，炒め物，焼き魚などの様々な種類のお弁当を食べることができます。",
+    },
     words: [
       "手軽",
       "お弁当",
@@ -147,11 +224,14 @@ const shopData = [
   {
     type: "lunch",
     imgSrc: "./image/旬八弁当店.jpg",
-    title: "旬八弁当店",
-    //八百屋のお弁当屋さん。色とりどりの旬の野菜が入ったお弁当が食べられます
-    description:
-      "This is a lunch box shop of a grocery store.<br>You can eat bento boxes filled with colorful seasonal vegetables.",
-    //検索用ワード
+    title: {
+      en: "Shunpachi Bento Shop",
+      ja: "旬八弁当店",
+    },
+    description: {
+      en: "This is a lunch box shop of a grocery store.<br>You can eat bento boxes filled with colorful seasonal vegetables.",
+      ja: "八百屋のお弁当屋さん。色とりどりの旬の野菜が入ったお弁当が食べられます",
+    },
     words: [
       "お弁当",
       "健康的",
@@ -172,15 +252,17 @@ const shopData = [
     mapUrl: "https://maps.app.goo.gl/wuNYzF1FaKwaeZCB7",
     time: "5 mins",
   },
-
   {
     type: "dinner",
     imgSrc: "./image/やっとこ_三田店.jpg",
-    title: "やっとこ 三田店",
-    //バラエティに富んだラーメンとつけ麺の店。気軽にサクッと食べたい時にオススメ。
-    description:
-      "This is a ramen and tsukemen restaurant with a wide variety of ramen and tsukemen.<br>Recommended for a casual, quick meal.",
-    //検索用ワード
+    title: {
+      en: "Yattoko Mita Branch",
+      ja: "やっとこ 三田店",
+    },
+    description: {
+      en: "This is a ramen and tsukemen restaurant with a wide variety of ramen and tsukemen.<br>Recommended for a casual, quick meal.",
+      ja: "バラエティに富んだラーメンとつけ麺の店。気軽にサクッと食べたい時にオススメ。",
+    },
     words: [
       "ラーメン",
       "手軽",
@@ -200,11 +282,14 @@ const shopData = [
   {
     type: "dinner",
     imgSrc: "./image/PIZZA_SALAVATORE_CUOMO_白金.jpg",
-    title: "PIZZA SALAVATORE CUOMO 白金",
-    //特製の窯で焼きあげてくれるピザのお店です パスタや前菜、デザートも豊富です
-    description:
-      "This is a pizza restaurant that bakes pizza in a special oven.<br />A wide variety of pastas, appetizers, and desserts are also available.",
-    //検索用ワード
+    title: {
+      en: "PIZZA SALAVATORE CUOMO Shirokane",
+      ja: "PIZZA SALAVATORE CUOMO 白金",
+    },
+    description: {
+      en: "This is a pizza restaurant that bakes pizza in a special oven.<br />A wide variety of pastas, appetizers, and desserts are also available.",
+      ja: "特製の窯で焼きあげてくれるピザのお店です パスタや前菜、デザートも豊富です",
+    },
     words: [
       "ピザ",
       "本格",
@@ -226,11 +311,14 @@ const shopData = [
   {
     type: "dinner",
     imgSrc: "./image/和食ダイニング_糸_ito.webp",
-    title: "和食ダイニング 糸 ito",
-    //日本酒と魚の和食のお店です。新鮮な魚料理と豊富なお酒を楽しめます。個別盛りの料理で接待などにもぜひ。
-    description:
-      "Japanese cuisine with sake and fish.<br />You can enjoy fresh fish dishes and a wide variety of sake. Please visit us for business entertainment with individual portions of dishes.",
-    //検索用ワード
+    title: {
+      en: "Japanese Dining Ito",
+      ja: "和食ダイニング 糸 ito",
+    },
+    description: {
+      en: "Japanese cuisine with sake and fish.<br />You can enjoy fresh fish dishes and a wide variety of sake. Please visit us for business entertainment with individual portions of dishes.",
+      ja: "日本酒と魚の和食のお店です。新鮮な魚料理と豊富なお酒を楽しめます。個別盛りの料理で接待などにもぜひ。",
+    },
     words: [
       "魚",
       "居酒屋",
@@ -254,11 +342,14 @@ const shopData = [
   {
     type: "dinner",
     imgSrc: "./image/焼き鳥屋_衣袋屋.jpg",
-    title: "焼き鳥屋 衣袋屋",
-    //希少部位も取りそろえた焼き鳥屋です。バーのような落ち着いた雰囲気で焼き鳥とお酒を楽しむことができます
-    description:
-      "This yakitori restaurant also offers a wide selection of rare parts.<br /> Enjoy yakitori and drinks in a relaxed bar-like atmosphere.",
-    //検索用ワード
+    title: {
+      en: "Yakitori Shop Kinutsuboya",
+      ja: "焼き鳥屋 衣袋屋",
+    },
+    description: {
+      en: "This yakitori restaurant also offers a wide selection of rare parts.<br /> Enjoy yakitori and drinks in a relaxed bar-like atmosphere.",
+      ja: "希少部位も取りそろえた焼き鳥屋です。バーのような落ち着いた雰囲気で焼き鳥とお酒を楽しむことができます",
+    },
     words: [
       "焼き鳥",
       "焼鳥",
@@ -278,11 +369,14 @@ const shopData = [
   {
     type: "dinner",
     imgSrc: "./image/芝の鳥一代.jpg",
-    title: "芝の鳥一代",
-    //10時間コツコツ煮込んだ水炊きが食べられるお店です。65人までの大人数での宴会もできます
-    description:
-      "This is a restaurant where you can enjoy mizutaki, a dish cooked in a steady simmer for 10 hours.<br />Large banquets of up to 65 people can also be held.",
-    //検索用ワード
+    title: {
+      en: "Shiba no Tori Ichidai",
+      ja: "芝の鳥一代",
+    },
+    description: {
+      en: "This is a restaurant where you can enjoy mizutaki, a dish cooked in a steady simmer for 10 hours.<br />Large banquets of up to 65 people can also be held.",
+      ja: "10時間コツコツ煮込んだ水炊きが食べられるお店です。65人までの大人数での宴会もできます",
+    },
     words: [
       "焼鳥",
       "やきとり",
@@ -305,11 +399,14 @@ const shopData = [
   {
     type: "dinner",
     imgSrc: "./image/恵比寿餃子.jpg",
-    title: "恵比寿餃子 大豊記 芝大門",
-    //餃子を中心にした中華料理のお店です。お手軽な値段の豊富な種類の料理がお酒と楽しめます
-    description:
-      "A Chinese restaurant with a focus on dumplings.<br />A wide variety of dishes at reasonable prices can be enjoyed with alcohol.",
-    //検索用ワード
+    title: {
+      en: "Ebisu Gyoza Taihoki Shiba Daimon",
+      ja: "恵比寿餃子 大豊記 芝大門",
+    },
+    description: {
+      en: "A Chinese restaurant with a focus on dumplings.<br />A wide variety of dishes at reasonable prices can be enjoyed with alcohol.",
+      ja: "餃子を中心にした中華料理のお店です。お手軽な値段の豊富な種類の料理がお酒と楽しめます",
+    },
     words: [
       "餃子",
       "ぎょうざ",
@@ -331,6 +428,9 @@ const shopData = [
   },
 ];
 
+//
+//
+//
 //実際にHTML内にカードを追加する関数
 function createShopCards() {
   const lunchContainer = document.getElementById("lunchContainer");
@@ -347,6 +447,9 @@ function createShopCards() {
       "ほっかほっか亭 三田3丁目",
       "旬八弁当店",
     ];
+    //時間によって表記切り替えのための変数
+    const isFar = parseInt(shop.time) >= 10;
+    const farIcon = isFar ? "directions_run" : "directions_walk";
 
     //カードのHTMLをテンプレートリテラルで作成
     const cardHTML = `
@@ -354,10 +457,12 @@ function createShopCards() {
     <div class="card shadow-sm flex-fill d-flex flex-column">
       <img src="${shop.imgSrc}" class="bd-placeholder-img card-img-top ${
       limitedTitles.includes(shop.title) ? "limited-width" : ""
-    }" alt="${shop.title}" width="100%" height="225" />
-      <p style="margin: 1em 0 1em 1em; color: orange">${shop.title}</p>
+    }" alt="${shop.title[currentLang]}" width="100%" height="225" />
+      <p style="margin: 1em 0 1em 1em; color: orange">${
+        shop.title[currentLang]
+      }</p>
       <div class="card-body d-flex flex-column">
-        <p class="card-text">${shop.description}</p>
+        <p class="card-text">${shop.description[currentLang]}</p>
 
         <!-- フッター部を下に固定 -->
         <div class="mt-auto d-flex justify-content-between align-items-center">
@@ -370,7 +475,7 @@ function createShopCards() {
             }" target="_blank" class="btn btn-sm btn-outline-secondary">Map</a>
           </div>
           <div class="d-flex align-items-center text-body-secondary gap-1">
-          <span class="material-symbols-outlined">directions_walk</span>
+          <span class="material-symbols-outlined">${farIcon}</span>
           <small class="text-body-secondary">${shop.time}</small>
           </div>
         </div>
@@ -412,6 +517,9 @@ function toHalfWidth(str) {
     .replace(/　/g, " "); // 全角スペースも半角スペースに
 }
 
+//
+//
+//
 //検索機能用
 function performSearch() {
   // noResultsを最初に取得
@@ -443,7 +551,7 @@ function performSearch() {
     const normalizedWords = words.map((w) => toHalfWidth(w.toLowerCase()));
 
     // words配列に検索キーワードが含まれているかを判定（部分一致ではなく完全一致）
-    if (normalizedWords.includes(keyword)) {
+    if (normalizedWords.some((w) => w.includes(keyword))) {
       hasResults = true;
 
       const limitedTitles = [
@@ -457,10 +565,12 @@ function performSearch() {
           <div class="card shadow-sm flex-fill d-flex flex-column">
             <img src="${shop.imgSrc}" class="bd-placeholder-img card-img-top ${
         limitedTitles.includes(shop.title) ? "limited-width" : ""
-      }" alt="${shop.title}" width="100%" height="225" />
-            <p style="margin: 1em 0 1em 1em; color: orange">${shop.title}</p>
+      }" alt="${shop.title[currentLang]}" width="100%" height="225" />
+            <p style="margin: 1em 0 1em 1em; color: orange">${
+              shop.title[currentLang]
+            }</p>
             <div class="card-body d-flex flex-column">
-              <p class="card-text">${shop.description}</p>
+              <p class="card-text">${shop.description[currentLang]}</p>
               <div class="mt-auto d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a href="${
